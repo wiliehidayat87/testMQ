@@ -1,0 +1,4 @@
+github.com/streadway/amqp v1.0.0 h1:kuuDrUJFZL1QYL9hUNuCxNObNzB0bV/ZG5jV3RWAQgo=
+github.com/streadway/amqp v1.0.0/go.mod h1:AZpEONHx3DKn8O/DFsRAY58/XVQiIPMTMB1SddzLXVw=
+github.com/wiliehidayat87/rmqp v0.0.0-20220307091234-12e1bd24b3ae h1:1071jJ6pnxuAsXIk4TqAOmJqgbf1249SRcndiaUAwFM=
+github.com/wiliehidayat87/rmqp v0.0.0-20220307091234-12e1bd24b3ae/go.mod h1:JbjFZsihR2TuTbY8iiJiMWTcOqesLZmJZ5QBfWlQk4c=
