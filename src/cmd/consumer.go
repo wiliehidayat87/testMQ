@@ -18,11 +18,11 @@ var consumerCmd = &cobra.Command{
 
 		// Setup / Init the log
 		Log := U.InitLog(U.Utils{
-			LogPath:             LOG_PATH,
-			LogLevelInit:        LOG_LEVEL,
+			LogPath:             config.LOG_PATH,
+			LogLevelInit:        config.LOG_LEVEL,
 			AccessLogFormat:     "${ip} ${time} ${method} ${url} ${body} ${referer} ${ua} ${header} ${status} ${latency}\n",
 			AccessLogTimeFormat: "[02/Jan/2006:15:04:05 Z0700]",
-			TimeZone:            APP_TZ,
+			TimeZone:            config.APP_TZ,
 		})
 		Log.SetUpLog(U.Utils{LogThread: Log.GetUniqId(), LogName: "consumer"})
 
@@ -45,7 +45,7 @@ var consumerCmd = &cobra.Command{
 		var m sync.Mutex
 
 		// RabbitMQ
-		queue := rabbitmq.InitQueue(rabbitmq.CfgAMQP{Host: RMQ_HOST, User: RMQ_USER, Pass: RMQ_PASS, Port: RMQ_PORT})
+		queue := rabbitmq.InitQueue(rabbitmq.CfgAMQP{Host: config.RMQ_HOST, User: config.RMQ_USER, Pass: config.RMQ_PASS, Port: config.RMQ_PORT})
 
 		// SETUP CHANNEL
 		queue.SetUpChannel(config.RMQ_EXCHANGETYPE, true, config.RMQ_MOEXCHANGE, true, config.RMQ_MOQUEUE)

@@ -21,20 +21,20 @@ var serverCmd = &cobra.Command{
 
 		// Setup / Init the log
 		Log := U.InitLog(U.Utils{
-			LogPath:             LOG_PATH,
-			LogLevelInit:        LOG_LEVEL,
+			LogPath:             config.LOG_PATH,
+			LogLevelInit:        config.LOG_LEVEL,
 			AccessLogFormat:     "${ip} ${time} ${method} ${url} ${body} ${referer} ${ua} ${header} ${status} ${latency}\n",
 			AccessLogTimeFormat: "[02/Jan/2006:15:04:05 Z0700]",
-			TimeZone:            APP_TZ,
+			TimeZone:            config.APP_TZ,
 		})
 		Log.SetUpLog(U.Utils{LogThread: Log.GetUniqId(), LogName: "access_log"})
 
 		Log.Write("info",
-			fmt.Sprintf("RMQ_HOST: %#v", RMQ_USER),
+			fmt.Sprintf("RMQ_HOST: %#v", config.RMQ_USER),
 		)
 
 		// Postgre SQL
-		pgSql, err := psql.InitPSQL(URI_POSTGRES)
+		pgSql, err := psql.InitPSQL(config.URI_POSTGRES)
 
 		if err != nil {
 
@@ -44,16 +44,16 @@ var serverCmd = &cobra.Command{
 		}
 
 		// Redis
-		red := redis.InitRedis(redis.CfgRed{Host: REDIS_HOST, Port: REDIS_PORT, Password: REDIS_PASS})
+		red := redis.InitRedis(redis.CfgRed{Host: config.REDIS_HOST, Port: config.REDIS_PORT, Password: config.REDIS_PASS})
 
 		// RabbitMQ
-		queue := rabbitmq.InitQueue(rabbitmq.CfgAMQP{Host: RMQ_HOST, User: RMQ_USER, Pass: RMQ_PASS, Port: RMQ_PORT})
+		queue := rabbitmq.InitQueue(rabbitmq.CfgAMQP{Host: config.RMQ_HOST, User: config.RMQ_USER, Pass: config.RMQ_PASS, Port: config.RMQ_PORT})
 
 		// SETUP CHANNEL
 		queue.SetUpChannel(config.RMQ_EXCHANGETYPE, true, config.RMQ_MOEXCHANGE, true, config.RMQ_MOQUEUE)
 
 		router := app.StartApplication(Log, pgSql, red, queue)
-		log.Fatal(router.Listen(":" + APP_PORT))
+		log.Fatal(router.Listen(":" + config.APP_PORT))
 
 	},
 }

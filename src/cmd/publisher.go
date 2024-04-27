@@ -8,6 +8,8 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/cobra"
 	U "github.com/wiliehidayat87/mylib/v2"
+
+	"github.com/wiliehidayat87/testMQ/src/config"
 )
 
 var publisherCmd = &cobra.Command{
@@ -25,7 +27,7 @@ var publisherCmd = &cobra.Command{
 			return rootHandler(c)
 		})
 
-		httpPort := APP_PORT
+		httpPort := config.APP_PORT
 		if httpPort == "" {
 			httpPort = "8080"
 		}
@@ -37,11 +39,11 @@ var publisherCmd = &cobra.Command{
 func rootHandler(c echo.Context) error {
 
 	Log := U.InitLog(U.Utils{
-		LogPath:             LOG_PATH,
-		LogLevelInit:        LOG_LEVEL,
+		LogPath:             config.LOG_PATH,
+		LogLevelInit:        config.LOG_LEVEL,
 		AccessLogFormat:     "${ip} ${time} ${method} ${url} ${body} ${referer} ${ua} ${header} ${status} ${latency}\n",
 		AccessLogTimeFormat: "[02/Jan/2006:15:04:05 Z0700]",
-		TimeZone:            APP_TZ,
+		TimeZone:            config.APP_TZ,
 	})
 	Log.SetUpLog(U.Utils{LogThread: Log.GetUniqId(), LogName: "publisher"})
 

@@ -11,12 +11,10 @@ services:
       - 9022:9022
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    env_file:
-      - .env
     volumes:
       - /Users/wiliewahyuhidayat/Documents/GO/testMQ/logs:/Users/wiliewahyuhidayat/Documents/GO/testMQ/logs
     logging:
       driver: "json-file"
       options:
-        max-size: "200k"
+        max-size: "200m"
         max-file: "10"

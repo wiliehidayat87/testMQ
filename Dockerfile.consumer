@@ -6,7 +6,12 @@ RUN apk --update add ca-certificates
 
 LABEL author="Wilie wahyu hidayat"
 
-RUN mkdir -p /Users/wiliewahyuhidayat/Documents/GO/coba/logs
+RUN mkdir -p /Users
+RUN mkdir -p /Users/wiliewahyuhidayat
+RUN mkdir -p /Users/wiliewahyuhidayat/Documents
+RUN mkdir -p /Users/wiliewahyuhidayat/Documents/GO
+RUN mkdir -p /Users/wiliewahyuhidayat/Documents/GO/testMQ
+RUN mkdir -p /Users/wiliewahyuhidayat/Documents/GO/testMQ/logs
 
 WORKDIR /Users/wiliewahyuhidayat/Documents/GO/testMQ
 COPY . .
@@ -25,5 +30,7 @@ COPY --from=golang /etc/group /etc/group
 COPY --from=golang /bin/sh /bin/sh
 
 COPY --from=golang /testMQ .
+
+VOLUME ["/Users/wiliewahyuhidayat/Documents/GO/testMQ/logs"]
 
 CMD ["/testMQ", "consumerCmd"]

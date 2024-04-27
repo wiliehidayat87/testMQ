@@ -4,7 +4,8 @@ services:
   listener-service:
     image: "wiliehidayat87/testmq-consumer:latest"
     deploy:
-      mode: global
+      mode: replicated
+      replicas: 1
       restart_policy:
         condition: on-failure
     extra_hosts:
@@ -12,9 +13,9 @@ services:
     env_file:
       - .env
     volumes:
-      - /Users/wiliewahyuhidayat/Documents/GO/testMQ/logs:/logs
+      - /Users/wiliewahyuhidayat/Documents/GO/testMQ/logs:/Users/wiliewahyuhidayat/Documents/GO/testMQ/logs
     logging:
       driver: "json-file"
       options:
-        max-size: "200k"
+        max-size: "200m"
         max-file: "10"

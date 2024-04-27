@@ -1,0 +1,45 @@
+version: "3.6"
+
+services:
+  postgresql:
+    image: postgres:alpine3.18
+    ports:
+      - "5433:5432"
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: corePu5hkomx
+      POSTGRES_DB: vasDB
+    volumes:
+        - /Users/wiliewahyuhidayat/Documents/GO/testMQ/data/pgsql:/var/lib/postgresql/data
+
+  rabbit:
+    image: rabbitmq:3.12-management
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: corePu5hkomx
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - /Users/wiliewahyuhidayat/Documents/GO/testMQ/data/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia/
+      - /Users/wiliewahyuhidayat/Documents/GO/testMQ/data/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  redis:
+    image: redis:alpine3.18
+    ports:
+      - "6380:6379"
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - /Users/wiliewahyuhidayat/Documents/GO/testMQ/data/redis:/data/redis
