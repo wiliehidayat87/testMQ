@@ -6,7 +6,6 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/goccy/go-json v0.10.2
 	github.com/gofiber/fiber/v2 v2.52.4
-	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/lib/pq v1.10.9
 	github.com/spf13/cobra v1.8.0
