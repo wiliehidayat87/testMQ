@@ -10,8 +10,6 @@ services:
         condition: on-failure
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    env_file:
-      - .env
     volumes:
       - /Users/wiliewahyuhidayat/Documents/GO/testMQ/logs:/Users/wiliewahyuhidayat/Documents/GO/testMQ/logs
     logging:
