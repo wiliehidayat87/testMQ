@@ -70,8 +70,8 @@ github.com/valyala/fasthttp v1.51.0 h1:8b30A5JlZ6C7AS81RsWjYMQmrZG6feChmgAolCl1S
 github.com/valyala/fasthttp v1.51.0/go.mod h1:oI2XroL+lI7vdXyYoQk03bXBThfFl2cVdIA3Xl7cH8g=
 github.com/valyala/tcplisten v1.0.0 h1:rBHj/Xf+E1tRGZyWIWwJDiRY0zc1Js+CV5DqwacVSA8=
 github.com/valyala/tcplisten v1.0.0/go.mod h1:T0xQ8SeCZGxckz9qRXTfG43PvQ/mcWh7FwZEA7Ioqkc=
-github.com/wiliehidayat87/mylib/v2 v2.2.0 h1:VqTbCWUmQ+jkafvTA84TmqlnCO/BvG3Ii3lgwsl6zYY=
-github.com/wiliehidayat87/mylib/v2 v2.2.0/go.mod h1:vB3+FuY6PvGCxuJ8Fp5hws+GoBTdxYVOEO6/JSEFIA4=
+github.com/wiliehidayat87/mylib/v2 v2.2.1 h1:GPSnlEqpMEdG5vkqil1zrzPMC9PC1oRPUY7N/q+lhAo=
+github.com/wiliehidayat87/mylib/v2 v2.2.1/go.mod h1:vB3+FuY6PvGCxuJ8Fp5hws+GoBTdxYVOEO6/JSEFIA4=
 github.com/wiliehidayat87/rmqp v1.0.8 h1:2div/nfJkSWwfEdV+A1JDVcoGUCBu5ADbwyCNOMlJ6A=
 github.com/wiliehidayat87/rmqp v1.0.8/go.mod h1:LUXpYmPvj/yfF18je6DYJi78901AcRxBr9wNt6QugN4=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
