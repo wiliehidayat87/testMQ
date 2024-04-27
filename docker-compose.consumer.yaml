@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  listener-service:
+    image: "wiliehidayat87/testmq-consumer:latest"
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    volumes:
+      - /Users/wiliewahyuhidayat/Documents/GO/testMQ/logs:/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
