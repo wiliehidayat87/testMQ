@@ -48,6 +48,7 @@ func rootHandler(Log *U.Utils, c echo.Context) error {
 
 	_echo := fmt.Sprintf("Hello, Docker %s!\n", "DEV")
 	Log.Write("info", _echo)
+	Log.Write("info", "logname = "+Log.LogName)
 
 	return c.HTML(http.StatusOK, _echo)
 }

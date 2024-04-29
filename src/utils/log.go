@@ -1,7 +1,6 @@
 package mylib
 
 import (
-	"fmt"
 	"io/fs"
 	"log"
 	"os"
@@ -138,7 +137,6 @@ func (l *Utils) Write(logLevel string, logMsg string) {
 				TimeZone:     l.TimeZone,
 			})
 			l.SetUpLog(Utils{LogThread: l.GetUniqId(), LogName: l.LogName})
-			fmt.Println("LogName : " + l.LogName)
 		}
 
 		threadlogging := l.LogThread + " " + l.GetFormatTime("2006-01-02 15:04:05")
