@@ -15,7 +15,7 @@ import (
 	"github.com/wiliehidayat87/testMQ/src/handler"
 )
 
-func mapUrls(log *U.Utils, db *sql.DB, r *redis.Red, msg rmqp.AMQP) *fiber.App {
+func mapUrls(l *U.Utils, db *sql.DB, r *redis.Red, msg rmqp.AMQP) *fiber.App {
 
 	f := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
@@ -23,14 +23,14 @@ func mapUrls(log *U.Utils, db *sql.DB, r *redis.Red, msg rmqp.AMQP) *fiber.App {
 	})
 
 	f.Use(logger.New(logger.Config{
-		Format:     log.AccessLogFormat,
-		TimeFormat: log.AccessLogTimeFormat,
-		TimeZone:   log.TimeZone,
-		Output:     log.LogOS,
+		Format:     l.AccessLogFormat,
+		TimeFormat: l.AccessLogTimeFormat,
+		TimeZone:   l.TimeZone,
+		Output:     l.LogOS,
 	}))
 
 	h := handler.NewIncomingHandler(handler.IncomingHandler{
-		Log: log, DB: db, R: r, Msg: msg,
+		L: l, DB: db, R: r, Msg: msg,
 	})
 
 	// API request/register token init

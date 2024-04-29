@@ -17,14 +17,14 @@ var consumerCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// Setup / Init the log
-		Log := U.InitLog(U.Utils{
+		l := U.InitLog(U.Utils{
 			LogPath:             config.LOG_PATH,
 			LogLevelInit:        config.LOG_LEVEL,
 			AccessLogFormat:     "${ip} ${time} ${method} ${url} ${body} ${referer} ${ua} ${header} ${status} ${latency}\n",
 			AccessLogTimeFormat: "[02/Jan/2006:15:04:05 Z0700]",
 			TimeZone:            config.APP_TZ,
 		})
-		Log.SetUpLog(U.Utils{LogThread: Log.GetUniqId(), LogName: "consumer"})
+		l.SetUpLog(U.Utils{LogThread: l.GetUniqId(), LogName: "consumer"})
 
 		// Postgre SQL
 		/*
@@ -63,7 +63,7 @@ var consumerCmd = &cobra.Command{
 
 				m.Lock()
 
-				Log.Write("info",
+				l.Write(l.LogName, "info",
 					fmt.Sprintf("Consume message, correlation id : %s, Data: %s ...", d.CorrelationId, string(d.Body)),
 				)
 
@@ -76,7 +76,7 @@ var consumerCmd = &cobra.Command{
 
 		}()
 
-		Log.Write("info", "[*] Waiting for data...")
+		l.Write(l.LogName, "info", "[*] Waiting for data...")
 
 		<-forever
 

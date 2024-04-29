@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"reflect"
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,29 +10,9 @@ import (
 	"github.com/wiliehidayat87/testMQ/src/datasource/redis"
 )
 
-func TestNewIncomingHandler(t *testing.T) {
-	type args struct {
-		obj IncomingHandler
-	}
-	tests := []struct {
-		name string
-		args args
-		want *IncomingHandler
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := NewIncomingHandler(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewIncomingHandler() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestIncomingHandler_PublishMessage(t *testing.T) {
 	type fields struct {
-		Log *U.Utils
+		L   *U.Utils
 		DB  *sql.DB
 		R   *redis.Red
 		Msg rmqp.AMQP
@@ -52,7 +31,7 @@ func TestIncomingHandler_PublishMessage(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			h := &IncomingHandler{
-				Log: tt.fields.Log,
+				L:   tt.fields.L,
 				DB:  tt.fields.DB,
 				R:   tt.fields.R,
 				Msg: tt.fields.Msg,
@@ -66,7 +45,7 @@ func TestIncomingHandler_PublishMessage(t *testing.T) {
 
 func TestIncomingHandler_ConsumeMessage(t *testing.T) {
 	type fields struct {
-		Log *U.Utils
+		L   *U.Utils
 		DB  *sql.DB
 		R   *redis.Red
 		Msg rmqp.AMQP
@@ -85,7 +64,7 @@ func TestIncomingHandler_ConsumeMessage(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			h := &IncomingHandler{
-				Log: tt.fields.Log,
+				L:   tt.fields.L,
 				DB:  tt.fields.DB,
 				R:   tt.fields.R,
 				Msg: tt.fields.Msg,

@@ -14,7 +14,7 @@ import (
 )
 
 type IncomingHandler struct {
-	Log *U.Utils
+	L   *U.Utils
 	DB  *sql.DB
 	R   *redis.Red
 	Msg rmqp.AMQP
@@ -22,7 +22,7 @@ type IncomingHandler struct {
 
 func NewIncomingHandler(obj IncomingHandler) *IncomingHandler {
 	return &IncomingHandler{
-		Log: obj.Log,
+		L:   obj.L,
 		DB:  obj.DB,
 		R:   obj.R,
 		Msg: obj.Msg,
@@ -31,9 +31,9 @@ func NewIncomingHandler(obj IncomingHandler) *IncomingHandler {
 
 func (h *IncomingHandler) PublishMessage(c *fiber.Ctx) error {
 
-	h.Log.SetUpLog(U.Utils{LogThread: h.Log.GetUniqId(), LogName: "publisher"})
+	h.L.SetUpLog(U.Utils{LogThread: h.L.GetUniqId(), LogName: "publisher"})
 
-	corId := U.Concat("MOR", h.Log.GetUniqId())
+	corId := U.Concat("MOR", h.L.GetUniqId())
 	message := c.Params("message")
 
 	published := h.Msg.PublishMsg(rmqp.PublishItems{
@@ -47,13 +47,13 @@ func (h *IncomingHandler) PublishMessage(c *fiber.Ctx) error {
 
 	if !published {
 
-		h.Log.Write("debug",
+		h.L.Write(h.L.LogName, "debug",
 			fmt.Sprintf("[x] Failed published: %s, Data: %s ...", corId, message),
 		)
 
 	} else {
 
-		h.Log.Write("debug",
+		h.L.Write(h.L.LogName, "debug",
 			fmt.Sprintf("[v] Published: %s, Data: %s ...", corId, message),
 		)
 	}
@@ -63,7 +63,7 @@ func (h *IncomingHandler) PublishMessage(c *fiber.Ctx) error {
 
 func (h *IncomingHandler) ConsumeMessage(c *fiber.Ctx) error {
 
-	h.Log.SetUpLog(U.Utils{LogThread: h.Log.GetUniqId(), LogName: "consumer"})
+	h.L.SetUpLog(U.Utils{LogThread: h.L.GetUniqId(), LogName: "consumer"})
 
 	var m sync.Mutex
 
@@ -79,7 +79,7 @@ func (h *IncomingHandler) ConsumeMessage(c *fiber.Ctx) error {
 		for d := range messagesData {
 
 			m.Lock()
-			h.Log.Write("info",
+			h.L.Write(h.L.LogName, "info",
 				fmt.Sprintf("Consume message, correlation id : %s, Data: %#v ...", d.CorrelationId, string(d.Body)),
 			)
 
@@ -93,7 +93,7 @@ func (h *IncomingHandler) ConsumeMessage(c *fiber.Ctx) error {
 
 	}()
 
-	h.Log.Write("info", "[*] Waiting for data...")
+	h.L.Write(h.L.LogName, "info", "[*] Waiting for data...")
 
 	<-forever
 

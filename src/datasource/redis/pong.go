@@ -33,7 +33,7 @@ func InitRedis(cfg CfgRed) *Red {
 	}
 }
 
-func (r *Red) Get(Log *U.Utils, key string) bool {
+func (r *Red) Get(l *U.Utils, key string) bool {
 
 	theKeyValue, _ := r.Redis.Get(key).Result()
 
@@ -41,7 +41,7 @@ func (r *Red) Get(Log *U.Utils, key string) bool {
 
 	if theKeyValue == "" {
 
-		Log.Write("debug",
+		l.Write(l.LogName, "debug",
 			fmt.Sprintf("key [%s], is not exist", key),
 		)
 
@@ -49,7 +49,7 @@ func (r *Red) Get(Log *U.Utils, key string) bool {
 
 	} else if theKeyValue != "" {
 
-		Log.Write("debug",
+		l.Write(l.LogName, "debug",
 			fmt.Sprintf("key [%s] is existed", key),
 		)
 
@@ -73,20 +73,20 @@ func (r *Red) GetValue(key string) string {
 	return theKeyValue
 }
 
-func (r *Red) Put(Log *U.Utils, key string, val string) bool {
+func (r *Red) Put(l *U.Utils, key string, val string) bool {
 
 	err := r.Redis.Set(key, val, 0).Err()
 
 	if err != nil {
 
-		Log.Write("debug",
+		l.Write(l.LogName, "debug",
 			fmt.Sprintf("Couldn't store this key : %s", key),
 		)
 
 		return false
 	} else {
 
-		Log.Write("debug",
+		l.Write(l.LogName, "debug",
 			fmt.Sprintf("Key stored : %s", key),
 		)
 
@@ -95,20 +95,20 @@ func (r *Red) Put(Log *U.Utils, key string, val string) bool {
 
 }
 
-func (r *Red) Set(Log *U.Utils, key string, val interface{}) bool {
+func (r *Red) Set(l *U.Utils, key string, val interface{}) bool {
 
 	err := r.Redis.Set(key, val, 0).Err()
 
 	if err != nil {
 
-		Log.Write("debug",
+		l.Write(l.LogName, "debug",
 			fmt.Sprintf("Couldn't store this key : %s", key),
 		)
 
 		return false
 	} else {
 
-		Log.Write("debug",
+		l.Write(l.LogName, "debug",
 			fmt.Sprintf("Key stored : %s", key),
 		)
 
@@ -117,9 +117,9 @@ func (r *Red) Set(Log *U.Utils, key string, val interface{}) bool {
 
 }
 
-func (r *Red) Rm(Log *U.Utils, key string) error {
+func (r *Red) Rm(l *U.Utils, key string) error {
 
-	Log.Write("debug",
+	l.Write(l.LogName, "debug",
 		fmt.Sprintf("Key removed : %s", key),
 	)
 

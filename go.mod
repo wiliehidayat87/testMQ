@@ -9,7 +9,7 @@ require (
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/lib/pq v1.10.9
 	github.com/spf13/cobra v1.8.0
-	github.com/wiliehidayat87/mylib/v2 v2.2.1
+	github.com/wiliehidayat87/mylib/v2 v2.2.2
 	github.com/wiliehidayat87/rmqp v1.0.8
 )
 

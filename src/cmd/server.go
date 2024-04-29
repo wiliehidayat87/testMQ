@@ -20,16 +20,16 @@ var serverCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// Setup / Init the log
-		Log := U.InitLog(U.Utils{
+		l := U.InitLog(U.Utils{
 			LogPath:             config.LOG_PATH,
 			LogLevelInit:        config.LOG_LEVEL,
 			AccessLogFormat:     "${ip} ${time} ${method} ${url} ${body} ${referer} ${ua} ${header} ${status} ${latency}\n",
 			AccessLogTimeFormat: "[02/Jan/2006:15:04:05 Z0700]",
 			TimeZone:            config.APP_TZ,
 		})
-		Log.SetUpLog(U.Utils{LogThread: Log.GetUniqId(), LogName: "access_log"})
+		l.SetUpLog(U.Utils{LogThread: l.GetUniqId(), LogName: "access_log"})
 
-		Log.Write("info",
+		l.Write(l.LogName, "info",
 			fmt.Sprintf("RMQ_HOST: %#v", config.RMQ_USER),
 		)
 
@@ -38,7 +38,7 @@ var serverCmd = &cobra.Command{
 
 		if err != nil {
 
-			Log.Write("error",
+			l.Write(l.LogName, "error",
 				fmt.Sprintf("Error db init occured: %#v", err),
 			)
 		}
@@ -52,7 +52,7 @@ var serverCmd = &cobra.Command{
 		// SETUP CHANNEL
 		queue.SetUpChannel(config.RMQ_EXCHANGETYPE, true, config.RMQ_MOEXCHANGE, true, config.RMQ_MOQUEUE)
 
-		router := app.StartApplication(Log, pgSql, red, queue)
+		router := app.StartApplication(l, pgSql, red, queue)
 		log.Fatal(router.Listen(":" + config.APP_PORT))
 
 	},
