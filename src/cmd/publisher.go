@@ -7,8 +7,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/cobra"
-	U "github.com/wiliehidayat87/mylib/v2"
 	"github.com/wiliehidayat87/testMQ/src/config"
+	U "github.com/wiliehidayat87/testMQ/src/utils"
 )
 
 var publisherCmd = &cobra.Command{
