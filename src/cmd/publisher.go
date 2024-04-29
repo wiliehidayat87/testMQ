@@ -47,8 +47,8 @@ var publisherCmd = &cobra.Command{
 func rootHandler(Log *U.Utils, c echo.Context) error {
 
 	_echo := fmt.Sprintf("Hello, Docker %s!\n", "DEV")
-	Log.Write("info", _echo)
-	Log.Write("info", "logname = "+Log.LogName)
+	Log.Write("info", _echo, "20240729")
+	Log.Write("info", Log.LogFileName+", logname = "+Log.LogName, "20240430")
 
 	return c.HTML(http.StatusOK, _echo)
 }

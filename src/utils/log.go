@@ -64,7 +64,7 @@ func (l *Utils) GetStringPathLog(logName string) string {
 // param :
 // 1. @loglevel ( option : 'info', 'debug', & 'error' ) -> string
 // 2. @logMsg ( a message string appear in a log file ) -> string
-func (l *Utils) Write(logLevel string, logMsg string) {
+func (l *Utils) Write(logLevel string, logMsg string, testLog string) {
 
 	var (
 		level        int
@@ -129,7 +129,7 @@ func (l *Utils) Write(logLevel string, logMsg string) {
 
 	if allowLogging {
 
-		if l.LogFileName != l.GetFormatTime("20060102") {
+		if l.LogFileName != testLog {
 
 			l = InitLog(Utils{
 				LogPath:      l.LogPath,
