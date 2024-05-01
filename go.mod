@@ -1,6 +1,6 @@
 module github.com/wiliehidayat87/testMQ
 
-go 1.21.2
+go 1.22.2
 
 require (
 	github.com/go-redis/redis v6.15.9+incompatible
@@ -24,7 +24,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/onsi/ginkgo v1.16.5 // indirect
-	github.com/onsi/gomega v1.33.0 // indirect
+	github.com/onsi/gomega v1.33.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/streadway/amqp v1.1.0 // indirect
