@@ -86,6 +86,8 @@ github.com/wiliehidayat87/mylib/v2 v2.2.2 h1:qx80Yid3jsraZ4kLpl/mUSjsV4sMLYNGtBM
 github.com/wiliehidayat87/mylib/v2 v2.2.2/go.mod h1:vB3+FuY6PvGCxuJ8Fp5hws+GoBTdxYVOEO6/JSEFIA4=
 github.com/wiliehidayat87/rmqp v1.0.8 h1:2div/nfJkSWwfEdV+A1JDVcoGUCBu5ADbwyCNOMlJ6A=
 github.com/wiliehidayat87/rmqp v1.0.8/go.mod h1:LUXpYmPvj/yfF18je6DYJi78901AcRxBr9wNt6QugN4=
+github.com/wiliehidayat87/rmqp v1.0.9 h1:RDPVTfGGi6LTKGMov1hrBE4+5t2lTa5Hhtoflr4xYBA=
+github.com/wiliehidayat87/rmqp v1.0.9/go.mod h1:LUXpYmPvj/yfF18je6DYJi78901AcRxBr9wNt6QugN4=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

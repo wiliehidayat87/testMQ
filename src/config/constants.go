@@ -17,6 +17,7 @@ const (
 	RMQ_DATATYPE     string = "application/json"
 	RMQ_MOEXCHANGE   string = "E_MO"
 	RMQ_MOQUEUE      string = "Q_MO"
+	RMQ_VHOST        string = "/testMQ"
 	LOG_PATH         string = "/Users/wiliewahyuhidayat/Documents/GO/testMQ/logs"
 	LOG_LEVEL        int    = 0
 )
