@@ -1,14 +1,13 @@
-version: "3.3"
-
 services:
-  listener-service:
+  publisher-service:
+    platform: linux/amd64
     image: "wiliehidayat87/testmq-publisher:latest"
     deploy:
       mode: global
       restart_policy:
         condition: on-failure
     ports:
-      - 9022:9022
+      - 9021:9021
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

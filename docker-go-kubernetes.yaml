@@ -1,0 +1,293 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: server
+  name: server
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: server
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: server
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nc -zv postgresql 5433; do echo "waiting for db"; sleep 5; done;']
+      containers:
+        - env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: corePu5hkomx
+            - name: POSTGRES_DB
+              value: vasDB
+            - name: PGPORT
+              value: "5433"
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin
+            - name: RABBITMQ_DEFAULT_PASS
+              value: corePu5hkomx
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: "/testMQ"
+          image: wiliehidayat87/testmq-listener:latest
+          name: server
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9022
+              hostPort: 9022
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: consumer
+  name: consumer
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: consumer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: consumer
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nc -zv postgresql 5433; do echo "waiting for db"; sleep 5; done;']
+      containers:
+        - env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: corePu5hkomx
+            - name: POSTGRES_DB
+              value: vasDB
+            - name: PGPORT
+              value: "5433"
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin
+            - name: RABBITMQ_DEFAULT_PASS
+              value: corePu5hkomx
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: "/testMQ"
+          image: wiliehidayat87/testmq-consumer:latest
+          name: consumer
+          imagePullPolicy: Never
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: postgresql
+  name: postgresql
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: postgresql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: postgresql
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: corePu5hkomx
+            - name: POSTGRES_DB
+              value: vasDB
+            - name: PGPORT
+              value: "5433"
+          image: postgres:alpine3.18
+          name: postgresql
+          ports:
+            - containerPort: 5433
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: rabbitmq
+  name: rabbitmq
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: rabbitmq
+    spec:
+      containers:
+        - env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin
+            - name: RABBITMQ_DEFAULT_PASS
+              value: corePu5hkomx
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: "/testMQ"
+          image: rabbitmq:3.12-management
+          name: rabbitmq
+          ports:
+            - containerPort: 5673
+              protocol: TCP
+            - containerPort: 15673
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: redis
+  name: redis
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: redis
+    spec:
+      containers:
+          image: redis:alpine3.18
+          name: redis
+          ports:
+            - containerPort: 6380
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: server
+  name: server
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: "9022"
+      port: 9022
+      targetPort: 9022
+      nodePort: 30001
+  selector:
+    service: server
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: consumer
+  name: consumer
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: "9021"
+      port: 9021
+      targetPort: 9021
+      nodePort: 30005
+  selector:
+    service: consumer
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: postgresql
+  name: postgresql
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: "5433"
+      port: 5433
+      targetPort: 5433
+      nodePort: 30002
+  selector:
+    service: postgresql
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: rabbitmq
+  name: rabbitmq
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: "5673"
+      port: 5673
+      targetPort: 5673
+      nodePort: 30003
+  selector:
+    service: rabbitmq
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: redis
+  name: redis
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: "6480"
+      port: 6480
+      targetPort: 6480
+      nodePort: 30004
+  selector:
+    service: redis
+status:
+  loadBalancer: {}

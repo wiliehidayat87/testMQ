@@ -36,12 +36,7 @@ var publisherCmd = &cobra.Command{
 			return rootHandler(Log, c)
 		})
 
-		httpPort := config.APP_PORT
-		if httpPort == "" {
-			httpPort = "8080"
-		}
-
-		e.Logger.Fatal(e.Start(":" + httpPort))
+		e.Logger.Fatal(e.Start(":9021"))
 	},
 }
 
