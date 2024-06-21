@@ -1,6 +1,5 @@
 services:
   publisher-service:
-    platform: linux/amd64
     image: "wiliehidayat87/testmq-publisher:latest"
     deploy:
       mode: global
